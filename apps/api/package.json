@@ -2,16 +2,22 @@
   "name": "api",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "start": "node dist/index.js"
+    "clean": "rimraf dist",
+    "dev": "tsx watch src/index.ts",
+    "lint": "echo \"No linter configured for api\"",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@hono/node-server": "^1.19.14",
+    "@repo/toolkit": "*",
+    "@repo/types": "*",
     "hono": "^4.12.18"
   },
   "devDependencies": {
     "@types/node": "^20.11.17",
+    "rimraf": "^6.0.1",
     "tsx": "^4.7.1",
     "typescript": "^5.8.3"
   }

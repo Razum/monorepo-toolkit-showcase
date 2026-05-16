@@ -19,10 +19,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  params: _params,
 }: {
   children: React.ReactNode;
-  params: Promise<Record<string, never>>;
 }) {
   return (
     <html

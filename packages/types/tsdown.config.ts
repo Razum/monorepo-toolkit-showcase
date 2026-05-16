@@ -7,7 +7,4 @@ export default defineConfig({
   dts: true,
   clean: true,
   exports: true,
-  deps: {
-    neverBundle: ['react', 'react-dom', '@repo/types'],
-  },
 })

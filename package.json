@@ -3,16 +3,22 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "build:dry": "turbo run build --dry-run",
+    "build:graph": "turbo run build --graph=turbo-graph.html",
+    "build:summarize": "turbo run build --summarize",
+    "clean": "turbo run clean",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "typecheck": "turbo run typecheck",
-    "sync:lint": "syncpack lint",
-    "sync:list": "syncpack list",
-    "sync:fix": "syncpack fix"
+    "syncpack:format": "syncpack format",
+    "syncpack:fix": "syncpack fix",
+    "syncpack:lint": "syncpack lint",
+    "syncpack:list": "syncpack list"
   },
   "devDependencies": {
     "prettier": "^3.7.4",
+    "rimraf": "^6.0.1",
     "syncpack": "^15.1.2",
     "turbo": "^2.9.12",
     "typescript": "5.9.2"

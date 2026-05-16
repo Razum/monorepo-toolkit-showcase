@@ -1,0 +1,25 @@
+{
+  "name": "@repo/types",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsdown",
+    "clean": "rimraf dist",
+    "dev": "tsdown --watch",
+    "lint": "echo \"No linter configured for @repo/types\"",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "rimraf": "^6.0.1",
+    "tsdown": "^0.22.0",
+    "typescript": "^5.9.2"
+  }
+}

@@ -1,121 +1,181 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { useMemo, useState } from 'react'
+import axios from 'axios'
+
+import type { Product, User } from '@repo/types'
+import { Badge, Button, Card } from '@repo/ui'
+import { debounce } from '@repo/toolkit/utils'
+import { useDebouncedValue } from '@repo/toolkit/hooks'
+
 import './App.css'
 
+/**
+ * `axios` stays installed on purpose: `.syncpackrc.json` bans it so `npm run syncpack:lint`
+ * demonstrates dependency policy enforcement. Prefer `fetch` in production code.
+ */
+void axios
+
+const users: User[] = [
+  {
+    id: 'u_spa_1',
+    name: 'Jordan Patel',
+    email: 'jordan@example.com',
+    role: 'admin',
+    createdAt: '2026-03-01T10:15:00.000Z',
+  },
+  {
+    id: 'u_spa_2',
+    name: 'Taylor Rivera',
+    email: 'taylor@example.com',
+    role: 'member',
+    createdAt: '2026-03-18T16:40:00.000Z',
+  },
+]
+
+const products: Product[] = [
+  {
+    id: 'p_spa_1',
+    name: 'Ultra-wide monitor',
+    description: 'Perfect for dashboards and dual-pane editors.',
+    price: 549,
+    category: 'displays',
+    inStock: true,
+  },
+  {
+    id: 'p_spa_2',
+    name: 'Desk mat',
+    description: 'Large surface with stitched edges.',
+    price: 39,
+    category: 'desk',
+    inStock: true,
+  },
+]
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [query, setQuery] = useState('')
+  const debouncedQuery = useDebouncedValue(query, 300)
+
+  const [tapCount, setTapCount] = useState(0)
+  const bumpTaps = useMemo(
+    () =>
+      debounce(() => {
+        setTapCount((c) => c + 1)
+      }, 250),
+    [],
+  )
+
+  const filteredProducts = products.filter((p) =>
+    debouncedQuery.trim()
+      ? p.name.toLowerCase().includes(debouncedQuery.toLowerCase())
+      : true,
+  )
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
+    <div className="demo-root">
+      <header className="demo-header">
         <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
+          <p className="demo-kicker">Vite + React</p>
+          <h1>Turborepo demo (SPA)</h1>
+          <p className="demo-lede">
+            Consumes compiled outputs from <code>@repo/ui</code>,{' '}
+            <code>@repo/toolkit</code>, and shared contracts from{' '}
+            <code>@repo/types</code>.
           </p>
+          <div className="demo-row">
+            <Badge tone="success">Workspace packages</Badge>
+            <Badge tone="warning">axios kept for Syncpack demo</Badge>
+          </div>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+
+        <div className="demo-row wrap">
+          <Button type="button">Primary</Button>
+          <Button type="button" variant="secondary">
+            Secondary
+          </Button>
+          <Button type="button" variant="ghost">
+            Ghost
+          </Button>
+        </div>
+      </header>
+
+      <section className="demo-grid">
+        <Card
+          title="Debounced search"
+          footer={
+            <span className="demo-muted">
+              Live query: <strong>{query || '—'}</strong> · Debounced:{' '}
+              <strong>{debouncedQuery || '—'}</strong>
+            </span>
+          }
         >
-          Count is {count}
-        </button>
+          <label className="demo-field">
+            <span>Filter products</span>
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Try typing quickly…"
+            />
+          </label>
+          <div className="demo-stack">
+            {filteredProducts.map((p) => (
+              <div key={p.id} className="demo-item">
+                <div>
+                  <div className="demo-item-title">{p.name}</div>
+                  <div className="demo-muted">{p.description}</div>
+                </div>
+                <div className="demo-row">
+                  <Badge tone={p.inStock ? 'success' : 'warning'}>
+                    {p.inStock ? 'In stock' : 'Limited'}
+                  </Badge>
+                  <span className="demo-price">${p.price}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+
+        <Card
+          title="debounce() — cancel / flush"
+          footer={
+            <div className="demo-row wrap">
+              <Badge tone="neutral">Committed taps: {tapCount}</Badge>
+            </div>
+          }
+        >
+          <p className="demo-muted">
+            Rapid clicks coalesce; use <strong>Flush</strong> to apply immediately,
+            or <strong>Cancel</strong> to drop the pending call.
+          </p>
+          <div className="demo-row wrap">
+            <Button type="button" variant="secondary" onClick={() => bumpTaps()}>
+              Debounced tap
+            </Button>
+            <Button type="button" variant="ghost" onClick={() => bumpTaps.flush()}>
+              Flush
+            </Button>
+            <Button type="button" variant="ghost" onClick={() => bumpTaps.cancel()}>
+              Cancel
+            </Button>
+          </div>
+        </Card>
       </section>
 
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
+      <section className="demo-grid">
+        {users.map((u) => (
+          <Card
+            key={u.id}
+            title={u.name}
+            footer={
+              <div className="demo-row wrap">
+                <Badge role={u.role}>{u.role}</Badge>
+                <span className="demo-muted">{u.email}</span>
+              </div>
+            }
+          >
+            <p className="demo-muted">Joined {new Date(u.createdAt).toLocaleDateString()}</p>
+          </Card>
+        ))}
       </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+    </div>
   )
 }
 

@@ -1,10 +1,65 @@
 {
   "$schema": "./node_modules/syncpack/schema.json",
+  "dependencyGroups": [
+    {
+      "aliasName": "apps",
+      "packages": ["apps/spa", "apps/ssr", "apps/api"]
+    },
+    {
+      "aliasName": "packages",
+      "packages": ["packages/ui", "packages/types", "packages/toolkit"]
+    },
+    {
+      "aliasName": "tooling",
+      "packages": ["."]
+    }
+  ],
+  "semverGroups": [
+    {
+      "label": "Production deps should use caret (^) ranges",
+      "dependencyTypes": ["prod"],
+      "range": "^"
+    },
+    {
+      "label": "Peer deps should use caret (^) ranges",
+      "dependencyTypes": ["peer"],
+      "range": "^"
+    },
+    {
+      "label": "Dev deps should use tilde (~) ranges where applicable",
+      "dependencyTypes": ["dev"],
+      "range": "~"
+    }
+  ],
   "versionGroups": [
     {
       "label": "Do not use axios (prefer fetch or another approved client)",
       "dependencies": ["axios"],
       "isBanned": true
+    },
+    {
+      "label": "Workspace packages (@repo/*) resolve via npm workspaces (*)",
+      "dependencies": ["@repo/ui", "@repo/toolkit", "@repo/types"],
+      "dependencyTypes": ["prod", "dev"],
+      "pinVersion": "*"
+    },
+    {
+      "label": "React ecosystem — same semver range across the monorepo",
+      "dependencies": ["react", "react-dom"],
+      "dependencyTypes": ["prod", "peer", "dev"],
+      "policy": "sameRange"
+    },
+    {
+      "label": "TypeScript — same semver range across the monorepo",
+      "dependencies": ["typescript"],
+      "dependencyTypes": ["dev"],
+      "policy": "sameRange"
+    },
+    {
+      "label": "ESLint — same semver range across the monorepo",
+      "dependencies": ["eslint", "@eslint/js", "typescript-eslint"],
+      "dependencyTypes": ["dev"],
+      "policy": "sameRange"
     }
   ]
 }
