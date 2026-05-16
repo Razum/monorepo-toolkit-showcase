@@ -6,10 +6,14 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "typecheck": "turbo run typecheck",
+    "sync:lint": "syncpack lint",
+    "sync:list": "syncpack list",
+    "sync:fix": "syncpack fix"
   },
   "devDependencies": {
     "prettier": "^3.7.4",
+    "syncpack": "^15.1.2",
     "turbo": "^2.9.12",
     "typescript": "5.9.2"
   },

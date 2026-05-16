@@ -1,0 +1,10 @@
+{
+  "$schema": "./node_modules/syncpack/schema.json",
+  "versionGroups": [
+    {
+      "label": "Do not use axios (prefer fetch or another approved client)",
+      "dependencies": ["axios"],
+      "isBanned": true
+    }
+  ]
+}
