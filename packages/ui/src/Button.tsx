@@ -1,27 +1,26 @@
-import type { ButtonHTMLAttributes, CSSProperties } from 'react'
+import type { ButtonHTMLAttributes, CSSProperties } from 'react';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost'
-export type ButtonSize = 'sm' | 'md' | 'lg'
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost';
+export type ButtonSize = 'sm' | 'md' | 'lg';
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: ButtonVariant
-  size?: ButtonSize
-}
+export type ButtonProps = {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+} & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const base: CSSProperties = {
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
   gap: 8,
-  fontFamily:
-    'ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial',
+  fontFamily: 'ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial',
   fontWeight: 600,
   borderRadius: 10,
   borderWidth: 1,
   borderStyle: 'solid',
   cursor: 'pointer',
   transition: 'background 120ms ease, border-color 120ms ease, transform 80ms ease',
-}
+};
 
 const variants: Record<ButtonVariant, CSSProperties> = {
   primary: {
@@ -40,13 +39,13 @@ const variants: Record<ButtonVariant, CSSProperties> = {
     borderColor: 'transparent',
     color: '#334155',
   },
-}
+};
 
 const sizes: Record<ButtonSize, CSSProperties> = {
   sm: { padding: '6px 10px', fontSize: 13, lineHeight: '18px' },
   md: { padding: '10px 14px', fontSize: 14, lineHeight: '20px' },
   lg: { padding: '12px 16px', fontSize: 15, lineHeight: '22px' },
-}
+};
 
 export function Button({
   variant = 'primary',
@@ -55,8 +54,8 @@ export function Button({
   disabled,
   ...props
 }: ButtonProps) {
-  const v = variants[variant]
-  const s = sizes[size]
+  const v = variants[variant];
+  const s = sizes[size];
   return (
     <button
       type="button"
@@ -71,5 +70,5 @@ export function Button({
       }}
       {...props}
     />
-  )
+  );
 }

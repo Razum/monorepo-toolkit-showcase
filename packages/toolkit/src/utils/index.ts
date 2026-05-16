@@ -1,1 +1,1 @@
-export { debounce, type DebouncedFn } from './debounce'
+export { debounce, type DebouncedFn } from './debounce';

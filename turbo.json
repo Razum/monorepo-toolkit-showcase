@@ -16,7 +16,18 @@
       "cache": false
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": ["^lint"],
+      "inputs": [
+        "**/*.{ts,tsx,js,jsx,mjs,cjs,json,md}",
+        "oxlint.config.ts",
+        "oxfmt.config.ts",
+        "!**/node_modules/**",
+        "!**/dist/**",
+        "!**/.next/**"
+      ]
+    },
+    "lint:fix": {
+      "cache": false
     },
     "typecheck": {
       "dependsOn": ["^typecheck"],

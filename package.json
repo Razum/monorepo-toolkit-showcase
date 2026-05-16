@@ -9,7 +9,7 @@
     "clean": "turbo run clean",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lint:fix": "turbo run lint:fix",
     "typecheck": "turbo run typecheck",
     "syncpack:format": "syncpack format",
     "syncpack:fix": "syncpack fix",
@@ -20,18 +20,21 @@
     "syncpack:update:check": "syncpack update --check"
   },
   "devDependencies": {
-    "prettier": "^3.7.4",
+    "@repo/configs": "*",
+    "oxfmt": "~0.50.0",
+    "oxlint": "~1.65.0",
     "rimraf": "^6.0.1",
     "syncpack": "^15.1.2",
     "turbo": "^2.9.12",
     "typescript": "5.9.2"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22.18"
   },
   "packageManager": "npm@9.8.1",
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "packages/configs"
   ]
 }

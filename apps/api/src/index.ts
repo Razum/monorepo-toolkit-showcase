@@ -1,16 +1,16 @@
-import { serve } from '@hono/node-server'
-import { Hono } from 'hono'
-import type { ApiResponse, HealthStatus, Product, User } from '@repo/types'
-import { debounce } from '@repo/toolkit/utils'
+import { serve } from '@hono/node-server';
+import { debounce } from '@repo/toolkit/utils';
+import type { ApiResponse, HealthStatus, Product, User } from '@repo/types';
+import { Hono } from 'hono';
 
-const app = new Hono()
+const app = new Hono();
 
-const startedAt = Date.now()
+const startedAt = Date.now();
 
 /** Shared utility demo: debounced logging (flush/cancel available at runtime). */
 const logDebounced = debounce((line: string) => {
-  console.log(`[api] ${line}`)
-}, 400)
+  console.log(`[api] ${line}`);
+}, 400);
 
 const users: User[] = [
   {
@@ -27,7 +27,7 @@ const users: User[] = [
     role: 'member',
     createdAt: '2026-02-02T09:30:00.000Z',
   },
-]
+];
 
 const products: Product[] = [
   {
@@ -46,7 +46,7 @@ const products: Product[] = [
     category: 'accessories',
     inStock: false,
   },
-]
+];
 
 function jsonOk<T>(data: T, message?: string): ApiResponse<T> {
   return {
@@ -54,29 +54,29 @@ function jsonOk<T>(data: T, message?: string): ApiResponse<T> {
     success: true,
     message,
     timestamp: new Date().toISOString(),
-  }
+  };
 }
 
 app.get('/health', (c) => {
-  logDebounced('GET /health')
+  logDebounced('GET /health');
   const payload: ApiResponse<HealthStatus> = jsonOk({
     status: 'ok',
     version: '0.0.0-demo',
     uptime: Date.now() - startedAt,
     timestamp: new Date().toISOString(),
-  })
-  return c.json(payload)
-})
+  });
+  return c.json(payload);
+});
 
 app.get('/users', (c) => {
-  logDebounced(`GET /users (${users.length})`)
-  return c.json(jsonOk(users))
-})
+  logDebounced(`GET /users (${users.length})`);
+  return c.json(jsonOk(users));
+});
 
 app.get('/products', (c) => {
-  logDebounced(`GET /products (${products.length})`)
-  return c.json(jsonOk(products))
-})
+  logDebounced(`GET /products (${products.length})`);
+  return c.json(jsonOk(products));
+});
 
 serve(
   {
@@ -84,6 +84,6 @@ serve(
     port: 3000,
   },
   (info) => {
-    console.log(`API listening on http://localhost:${info.port}`)
+    console.log(`API listening on http://localhost:${info.port}`);
   },
-)
+);

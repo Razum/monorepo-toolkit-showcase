@@ -1,0 +1,55 @@
+import { defineConfig } from "oxlint";
+
+export default defineConfig({
+  plugins: ["typescript", "import"],
+  rules: {
+    // --- Core rules (ported from eslint core, enforced by oxlint) ---
+    "no-debugger": "error",
+    "no-console": "warn",
+    "no-eval": "error",
+    "no-var": "error",
+    "prefer-const": "error",
+    "eqeqeq": ["error", "always", { null: "ignore" }],
+    "no-throw-literal": "error",
+    "no-return-assign": "error",
+    "no-shadow": "warn",
+    "no-unused-expressions": "warn",
+    "no-promise-executor-return": "error",
+    "no-await-in-loop": "warn",
+    "require-await": "warn",
+    "prefer-template": "warn",
+    "prefer-rest-params": "error",
+    "prefer-spread": "error",
+    "no-prototype-builtins": "error",
+    "no-new-wrappers": "error",
+    "no-implicit-coercion": "warn",
+    "no-unneeded-ternary": "warn",
+    "object-shorthand": "warn",
+    "prefer-object-has-own": "error",
+    "prefer-arrow-callback": "warn",
+
+    // --- TypeScript ---
+    "typescript/no-unused-vars": "error",
+    "typescript/no-explicit-any": "warn",
+    "typescript/consistent-type-imports": "warn",
+    "typescript/no-require-imports": "error",
+    "typescript/ban-ts-comment": "warn",
+    "typescript/prefer-as-const": "error",
+    "typescript/no-extra-non-null-assertion": "error",
+    "typescript/no-non-null-asserted-optional-chain": "error",
+    "typescript/no-unsafe-declaration-merging": "error",
+    "typescript/no-duplicate-enum-values": "error",
+    "typescript/no-empty-object-type": "warn",
+    "typescript/prefer-optional-chain": "warn",
+    "typescript/prefer-nullish-coalescing": "warn",
+    "typescript/no-unnecessary-type-constraint": "warn",
+    "typescript/no-useless-empty-export": "warn",
+    "typescript/consistent-type-definitions": ["warn", "type"],
+
+    // --- Import ---
+    "import/no-self-import": "error",
+    "import/no-duplicates": "error",
+    "import/no-named-as-default": "warn",
+    "import/first": "warn",
+  },
+});

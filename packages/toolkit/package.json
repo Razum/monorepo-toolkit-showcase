@@ -2,10 +2,10 @@
   "name": "@repo/toolkit",
   "version": "0.0.0",
   "private": true,
-  "type": "module",
   "files": [
     "dist"
   ],
+  "type": "module",
   "exports": {
     ".": "./dist/index.js",
     "./hooks": "./dist/hooks/index.js",
@@ -16,17 +16,19 @@
     "build": "tsdown",
     "clean": "rimraf dist",
     "dev": "tsdown --watch",
-    "lint": "echo \"No linter configured for @repo/toolkit\"",
+    "lint": "NODE_OPTIONS=--experimental-strip-types oxlint . && NODE_OPTIONS=--experimental-strip-types oxfmt --check .",
+    "lint:fix": "NODE_OPTIONS=--experimental-strip-types oxlint --fix . && NODE_OPTIONS=--experimental-strip-types oxfmt --write .",
     "typecheck": "tsc --noEmit"
   },
-  "peerDependencies": {
-    "react": "^19.2.0"
-  },
   "devDependencies": {
+    "@repo/configs": "*",
     "@types/react": "^19.2.14",
     "react": "^19.2.6",
     "rimraf": "^6.0.1",
     "tsdown": "^0.22.0",
     "typescript": "^5.9.2"
+  },
+  "peerDependencies": {
+    "react": "^19.2.0"
   }
 }

@@ -1,0 +1,12 @@
+{
+  "name": "@repo/configs",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "./oxlint/base": "./oxlint/base.ts",
+    "./oxlint/node": "./oxlint/node.ts",
+    "./oxlint/react": "./oxlint/react.ts",
+    "./oxlint/nextjs": "./oxlint/nextjs.ts",
+    "./oxfmt": "./oxfmt/index.ts"
+  }
+}

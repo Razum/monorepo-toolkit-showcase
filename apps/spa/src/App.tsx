@@ -1,18 +1,17 @@
-import { useMemo, useState } from 'react'
-import axios from 'axios'
+import { useDebouncedValue } from '@repo/toolkit/hooks';
+import { debounce } from '@repo/toolkit/utils';
+import type { Product, User } from '@repo/types';
+import { Badge, Button, Card } from '@repo/ui';
+import axios from 'axios';
+import { useMemo, useState } from 'react';
 
-import type { Product, User } from '@repo/types'
-import { Badge, Button, Card } from '@repo/ui'
-import { debounce } from '@repo/toolkit/utils'
-import { useDebouncedValue } from '@repo/toolkit/hooks'
-
-import './App.css'
+import './App.css';
 
 /**
  * `axios` stays installed on purpose: `.syncpackrc.json` bans it so `npm run syncpack:lint`
  * demonstrates dependency policy enforcement. Prefer `fetch` in production code.
  */
-void axios
+void axios;
 
 const users: User[] = [
   {
@@ -29,7 +28,7 @@ const users: User[] = [
     role: 'member',
     createdAt: '2026-03-18T16:40:00.000Z',
   },
-]
+];
 
 const products: Product[] = [
   {
@@ -48,26 +47,24 @@ const products: Product[] = [
     category: 'desk',
     inStock: true,
   },
-]
+];
 
 function App() {
-  const [query, setQuery] = useState('')
-  const debouncedQuery = useDebouncedValue(query, 300)
+  const [query, setQuery] = useState('');
+  const debouncedQuery = useDebouncedValue(query, 300);
 
-  const [tapCount, setTapCount] = useState(0)
+  const [tapCount, setTapCount] = useState(0);
   const bumpTaps = useMemo(
     () =>
       debounce(() => {
-        setTapCount((c) => c + 1)
+        setTapCount((c) => c + 1);
       }, 250),
     [],
-  )
+  );
 
   const filteredProducts = products.filter((p) =>
-    debouncedQuery.trim()
-      ? p.name.toLowerCase().includes(debouncedQuery.toLowerCase())
-      : true,
-  )
+    debouncedQuery.trim() ? p.name.toLowerCase().includes(debouncedQuery.toLowerCase()) : true,
+  );
 
   return (
     <div className="demo-root">
@@ -76,9 +73,8 @@ function App() {
           <p className="demo-kicker">Vite + React</p>
           <h1>Turborepo demo (SPA)</h1>
           <p className="demo-lede">
-            Consumes compiled outputs from <code>@repo/ui</code>,{' '}
-            <code>@repo/toolkit</code>, and shared contracts from{' '}
-            <code>@repo/types</code>.
+            Consumes compiled outputs from <code>@repo/ui</code>, <code>@repo/toolkit</code>, and
+            shared contracts from <code>@repo/types</code>.
           </p>
           <div className="demo-row">
             <Badge tone="success">Workspace packages</Badge>
@@ -142,8 +138,8 @@ function App() {
           }
         >
           <p className="demo-muted">
-            Rapid clicks coalesce; use <strong>Flush</strong> to apply immediately,
-            or <strong>Cancel</strong> to drop the pending call.
+            Rapid clicks coalesce; use <strong>Flush</strong> to apply immediately, or{' '}
+            <strong>Cancel</strong> to drop the pending call.
           </p>
           <div className="demo-row wrap">
             <Button type="button" variant="secondary" onClick={() => bumpTaps()}>
@@ -176,7 +172,7 @@ function App() {
         ))}
       </section>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

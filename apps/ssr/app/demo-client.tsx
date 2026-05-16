@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { useMemo, useState } from "react";
-import { Badge, Button, Card } from "@repo/ui";
-import { debounce } from "@repo/toolkit/utils";
-import { useDebouncedValue } from "@repo/toolkit/hooks";
+import { useDebouncedValue } from '@repo/toolkit/hooks';
+import { debounce } from '@repo/toolkit/utils';
+import { Badge, Button, Card } from '@repo/ui';
+import { useMemo, useState } from 'react';
 
 export function DemoClient() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const debouncedQuery = useDebouncedValue(query, 350);
   const [flushCount, setFlushCount] = useState(0);
 
@@ -23,7 +23,7 @@ export function DemoClient() {
       title="Client island"
       footer={
         <div className="flex flex-wrap gap-2">
-          <Badge tone="neutral">Debounced query: {debouncedQuery || "—"}</Badge>
+          <Badge tone="neutral">Debounced query: {debouncedQuery || '—'}</Badge>
           <Badge tone="success">Flush clicks (debounced): {flushCount}</Badge>
         </div>
       }

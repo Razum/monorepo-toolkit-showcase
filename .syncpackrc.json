@@ -39,7 +39,7 @@
     },
     {
       "label": "Workspace packages (@repo/*) resolve via npm workspaces (*)",
-      "dependencies": ["@repo/ui", "@repo/toolkit", "@repo/types"],
+      "dependencies": ["@repo/ui", "@repo/toolkit", "@repo/types", "@repo/configs"],
       "dependencyTypes": ["prod", "dev"],
       "pinVersion": "*"
     },
@@ -56,8 +56,8 @@
       "policy": "sameRange"
     },
     {
-      "label": "ESLint — same semver range across the monorepo",
-      "dependencies": ["eslint", "@eslint/js", "typescript-eslint"],
+      "label": "Oxlint + Oxfmt — same semver range across the monorepo",
+      "dependencies": ["oxlint", "oxfmt"],
       "dependencyTypes": ["dev"],
       "policy": "sameRange"
     }

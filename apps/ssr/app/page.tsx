@@ -1,25 +1,24 @@
-import Image from "next/image";
+import type { Product } from '@repo/types';
+import { Badge, Button, Card } from '@repo/ui';
+import Image from 'next/image';
 
-import type { Product } from "@repo/types";
-import { Badge, Button, Card } from "@repo/ui";
-
-import { DemoClient } from "./demo-client";
+import { DemoClient } from './demo-client';
 
 const products: Product[] = [
   {
-    id: "p_ssr_1",
-    name: "Noise‑cancelling headphones",
-    description: "Great for deep work sessions.",
+    id: 'p_ssr_1',
+    name: 'Noise‑cancelling headphones',
+    description: 'Great for deep work sessions.',
     price: 199,
-    category: "audio",
+    category: 'audio',
     inStock: true,
   },
   {
-    id: "p_ssr_2",
-    name: "4K webcam",
-    description: "Sharp picture for calls and streams.",
+    id: 'p_ssr_2',
+    name: '4K webcam',
+    description: 'Sharp picture for calls and streams.',
     price: 129,
-    category: "video",
+    category: 'video',
     inStock: false,
   },
 ];
@@ -48,8 +47,10 @@ export default function Home() {
               Monorepo demo: shared packages + SSR data
             </h1>
             <p className="max-w-2xl text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-              This page renders typed <span className="font-medium text-zinc-950 dark:text-zinc-50">Product</span>{" "}
-              models from <span className="font-medium text-zinc-950 dark:text-zinc-50">@repo/types</span>, styled with{" "}
+              This page renders typed{' '}
+              <span className="font-medium text-zinc-950 dark:text-zinc-50">Product</span> models
+              from <span className="font-medium text-zinc-950 dark:text-zinc-50">@repo/types</span>,
+              styled with{' '}
               <span className="font-medium text-zinc-950 dark:text-zinc-50">@repo/ui</span>.
             </p>
           </div>
@@ -74,9 +75,15 @@ export default function Home() {
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div className="flex flex-wrap gap-2">
                     <Badge tone="neutral">{p.category}</Badge>
-                    {p.inStock ? <Badge tone="success">In stock</Badge> : <Badge tone="warning">Backorder</Badge>}
+                    {p.inStock ? (
+                      <Badge tone="success">In stock</Badge>
+                    ) : (
+                      <Badge tone="warning">Backorder</Badge>
+                    )}
                   </div>
-                  <span className="text-sm font-semibold text-zinc-950 dark:text-zinc-50">${p.price.toFixed(2)}</span>
+                  <span className="text-sm font-semibold text-zinc-950 dark:text-zinc-50">
+                    ${p.price.toFixed(2)}
+                  </span>
                 </div>
               }
             >

@@ -1,4 +1,4 @@
-import { Badge, Button, Card } from '../../src'
+import { Badge, Button, Card } from '../../src';
 
 export function App() {
   return (
@@ -26,5 +26,5 @@ export function App() {
         </div>
       </Card>
     </div>
-  )
+  );
 }
