@@ -1,5 +1,6 @@
 {
   "$schema": "./node_modules/syncpack/schema.json",
+  "minimumReleaseAge": 10080,
   "dependencyGroups": [
     {
       "aliasName": "apps",
@@ -39,7 +40,12 @@
     },
     {
       "label": "Workspace packages (@repo/*) resolve via npm workspaces (*)",
-      "dependencies": ["@repo/ui", "@repo/toolkit", "@repo/types", "@repo/configs"],
+      "dependencies": [
+        "@repo/ui",
+        "@repo/toolkit",
+        "@repo/types",
+        "@repo/configs"
+      ],
       "dependencyTypes": ["prod", "dev"],
       "pinVersion": "*"
     },

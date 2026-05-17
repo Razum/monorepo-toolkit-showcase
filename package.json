@@ -17,7 +17,7 @@
     "syncpack:format": "syncpack format",
     "syncpack:fix": "syncpack fix",
     "syncpack:lint": "syncpack lint",
-    "syncpack:list": "syncpack list",
+    "syncpack:list": "syncpack list --sort=count",
     "syncpack:update": "syncpack update --interactive",
     "syncpack:update:interactive": "syncpack update --interactive",
     "syncpack:update:check": "syncpack update --check"
