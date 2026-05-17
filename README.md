@@ -40,7 +40,9 @@ npm install
 
 | Command                   | What it does                                                     |
 | ------------------------- | ---------------------------------------------------------------- |
-| `npm run dev`             | Runs `turbo run dev` (multiple dev servers via Turborepo)        |
+| `npm run dev`             | Runs `turbo run dev` (all dev servers via Turborepo)             |
+| `npm run dev:ssr`         | Builds `@repo/ui` first, then starts `ssr` + `api` together     |
+| `npm run dev:spa`         | Builds `@repo/ui` first, then starts `spa` + `api` together     |
 | `npm run build`           | Runs `turbo run build` with upstream `^build` ordering + caching |
 | `npm run lint`            | Runs `turbo run lint`                                            |
 | `npm run typecheck`       | Runs `turbo run typecheck`                                       |
@@ -72,6 +74,18 @@ npx turbo run build --summarize
 
 ## Turborepo notes
 
+### Dev orchestration for SSR / SPA
+
+[`turbo.json`](turbo.json) defines package-specific `ssr#dev` and `spa#dev` tasks that override the generic `dev`:
+
+- **`dependsOn: ["@repo/ui#build"]`** — Turbo runs `@repo/ui` build once before the dev server starts, so `dist/` is always present.
+- **`with: ["api#dev"]`** — `api#dev` is started concurrently every time `ssr#dev` or `spa#dev` runs.
+
+```bash
+npm run dev:ssr   # ui build → ssr dev + api dev
+npm run dev:spa   # ui build → spa dev + api dev
+```
+
 ### Task pipeline + cache fingerprints
 
 [`turbo.json`](turbo.json) declares tasks (`build`, `dev`, `lint`, `typecheck`, `clean`).
@@ -93,7 +107,13 @@ On the second run, Turbo should report cache hits for unchanged packages/apps.
 
 ### Package consumption model
 
-Apps depend on workspace packages via `"@repo/…": "*"` and import through **`package.json#exports`** pointing at **`dist/`** after `npm run build`.
+| Package | Exports from | Build needed? |
+| --- | --- | --- |
+| `@repo/types` | `src/` directly | No — type-only, erased at compile time |
+| `@repo/toolkit` | `src/` directly | No — consumed by bundlers/transpilers that handle TypeScript |
+| `@repo/ui` | `dist/` (tsdown) | Yes — compiled React components via `npm run build` |
+
+Apps declare `"@repo/…": "*"` workspace deps and resolve through `package.json#exports`.
 
 ## Syncpack notes
 
@@ -109,16 +129,18 @@ This demo intentionally includes **policy examples** you can talk through:
 
 ## Package builds (`tsdown`)
 
-Shared libraries [`packages/ui`](packages/ui), [`packages/toolkit`](packages/toolkit), and [`packages/types`](packages/types) use [`tsdown`](https://github.com/rolldown/tsdown) to emit **`dist/`** + **`.d.ts`** declarations.
+[`packages/ui`](packages/ui) uses [`tsdown`](https://github.com/rolldown/tsdown) to emit **`dist/`** + **`.d.ts`** declarations. `@repo/types` and `@repo/toolkit` export TypeScript source directly and require no build step.
 
 ## Troubleshooting
 
-### “Cannot find module `@repo/...` types/output”
+### “Cannot find module `@repo/ui`”
 
 Run a build so `dist/` exists:
 
 ```bash
 npm run build
+# or just the UI package:
+npx turbo run build --filter=@repo/ui
 ```
 
-During local iteration you can also run package watchers (`packages/*/npm run dev`) depending on your workflow.
+`@repo/types` and `@repo/toolkit` export from `src/` directly — no build needed for those.

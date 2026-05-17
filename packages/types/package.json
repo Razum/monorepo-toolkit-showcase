@@ -2,26 +2,18 @@
   "name": "@repo/types",
   "version": "0.0.0",
   "private": true,
-  "files": [
-    "dist"
-  ],
   "type": "module",
   "exports": {
-    ".": "./dist/index.js",
+    ".": "./src/index.ts",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "tsdown",
-    "clean": "rimraf dist",
-    "dev": "tsdown --watch",
     "lint": "NODE_OPTIONS=--experimental-strip-types oxlint . && NODE_OPTIONS=--experimental-strip-types oxfmt --check .",
     "lint:fix": "NODE_OPTIONS=--experimental-strip-types oxlint --fix . && NODE_OPTIONS=--experimental-strip-types oxfmt --write .",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@repo/configs": "*",
-    "rimraf": "^6.0.1",
-    "tsdown": "^0.22.0",
     "typescript": "^5.9.2"
   }
 }

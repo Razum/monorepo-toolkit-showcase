@@ -2,20 +2,14 @@
   "name": "@repo/toolkit",
   "version": "0.0.0",
   "private": true,
-  "files": [
-    "dist"
-  ],
   "type": "module",
   "exports": {
-    ".": "./dist/index.js",
-    "./hooks": "./dist/hooks/index.js",
-    "./utils": "./dist/utils/index.js",
+    ".": "./src/index.ts",
+    "./hooks": "./src/hooks/index.ts",
+    "./utils": "./src/utils/index.ts",
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "tsdown",
-    "clean": "rimraf dist",
-    "dev": "tsdown --watch",
     "lint": "NODE_OPTIONS=--experimental-strip-types oxlint . && NODE_OPTIONS=--experimental-strip-types oxfmt --check .",
     "lint:fix": "NODE_OPTIONS=--experimental-strip-types oxlint --fix . && NODE_OPTIONS=--experimental-strip-types oxfmt --write .",
     "typecheck": "tsc --noEmit"
@@ -24,8 +18,6 @@
     "@repo/configs": "*",
     "@types/react": "^19.2.14",
     "react": "^19.2.6",
-    "rimraf": "^6.0.1",
-    "tsdown": "^0.22.0",
     "typescript": "^5.9.2"
   },
   "peerDependencies": {
