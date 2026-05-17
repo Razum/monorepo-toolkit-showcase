@@ -2,7 +2,7 @@
   "name": "monorepo-toolkit-showcase",
   "private": true,
   "scripts": {
-    "build": "turbo run build --ui=stream",
+    "build": "turbo run build",
     "build:dry": "turbo run build --dry-run",
     "build:graph": "turbo run build --graph=turbo-graph.html",
     "build:summarize": "turbo run build --summarize",
@@ -37,7 +37,6 @@
   "packageManager": "npm@9.8.1",
   "workspaces": [
     "apps/*",
-    "packages/*",
-    "packages/configs"
+    "packages/*"
   ]
 }
