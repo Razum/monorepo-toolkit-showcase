@@ -6,7 +6,7 @@
     "build:dry": "turbo run build --dry-run",
     "build:graph": "turbo run build --graph=turbo-graph.html",
     "build:summarize": "turbo run build --summarize",
-    "turbo:devtools": "turbo devtools",
+    "devtools": "turbo devtools",
     "clean": "turbo run clean",
     "dev": "turbo run dev",
     "dev:ssr": "turbo run dev --filter=ssr",

@@ -1,49 +1,49 @@
-import { useDebouncedValue } from "@repo/toolkit/hooks";
-import { debounce } from "@repo/toolkit/utils";
-import type { Product, User } from "@repo/types";
-import { Badge, Button, Card } from "@repo/ui";
-import { useMemo, useState } from "react";
+import { useDebouncedValue } from '@repo/toolkit/hooks';
+import { debounce } from '@repo/toolkit/utils';
+import type { Product, User } from '@repo/types';
+import { Badge, Button, Card } from '@repo/ui';
+import { useMemo, useState } from 'react';
 
-import "./App.css";
+import './App.css';
 
 const users: User[] = [
   {
-    id: "u_spa_1",
-    name: "Jordan Patel",
-    email: "jordan@example.com",
-    role: "admin",
-    createdAt: "2026-03-01T10:15:00.000Z",
+    id: 'u_spa_1',
+    name: 'Jordan Patel',
+    email: 'jordan@example.com',
+    role: 'admin',
+    createdAt: '2026-03-01T10:15:00.000Z',
   },
   {
-    id: "u_spa_2",
-    name: "Taylor Rivera",
-    email: "taylor@example.com",
-    role: "member",
-    createdAt: "2026-03-18T16:40:00.000Z",
+    id: 'u_spa_2',
+    name: 'Taylor Rivera',
+    email: 'taylor@example.com',
+    role: 'member',
+    createdAt: '2026-03-18T16:40:00.000Z',
   },
 ];
 
 const products: Product[] = [
   {
-    id: "p_spa_1",
-    name: "Ultra-wide monitor",
-    description: "Perfect for dashboards and dual-pane editors.",
+    id: 'p_spa_1',
+    name: 'Ultra-wide monitor',
+    description: 'Perfect for dashboards and dual-pane editors.',
     price: 549,
-    category: "displays",
+    category: 'displays',
     inStock: true,
   },
   {
-    id: "p_spa_2",
-    name: "Desk mat",
-    description: "Large surface with stitched edges.",
+    id: 'p_spa_2',
+    name: 'Desk mat',
+    description: 'Large surface with stitched edges.',
     price: 39,
-    category: "desk",
+    category: 'desk',
     inStock: true,
   },
 ];
 
 function App() {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState('');
   const debouncedQuery = useDebouncedValue(query, 300);
 
   const [tapCount, setTapCount] = useState(0);
@@ -56,9 +56,7 @@ function App() {
   );
 
   const filteredProducts = products.filter((p) =>
-    debouncedQuery.trim()
-      ? p.name.toLowerCase().includes(debouncedQuery.toLowerCase())
-      : true,
+    debouncedQuery.trim() ? p.name.toLowerCase().includes(debouncedQuery.toLowerCase()) : true,
   );
 
   return (
@@ -68,9 +66,8 @@ function App() {
           <p className="demo-kicker">Vite + React</p>
           <h1>Turborepo demo (SPA)</h1>
           <p className="demo-lede">
-            Consumes compiled outputs from <code>@repo/ui</code>,{" "}
-            <code>@repo/toolkit</code>, and shared contracts from{" "}
-            <code>@repo/types</code>.
+            Consumes compiled outputs from <code>@repo/ui</code>, <code>@repo/toolkit</code>, and
+            shared contracts from <code>@repo/types</code>.
           </p>
           <div className="demo-row">
             <Badge tone="success">Workspace packages</Badge>
@@ -94,8 +91,8 @@ function App() {
           title="Debounced search"
           footer={
             <span className="demo-muted">
-              Live query: <strong>{query || "—"}</strong> · Debounced:{" "}
-              <strong>{debouncedQuery || "—"}</strong>
+              Live query: <strong>{query || '—'}</strong> · Debounced:{' '}
+              <strong>{debouncedQuery || '—'}</strong>
             </span>
           }
         >
@@ -115,8 +112,8 @@ function App() {
                   <div className="demo-muted">{p.description}</div>
                 </div>
                 <div className="demo-row">
-                  <Badge tone={p.inStock ? "success" : "warning"}>
-                    {p.inStock ? "In stock" : "Limited"}
+                  <Badge tone={p.inStock ? 'success' : 'warning'}>
+                    {p.inStock ? 'In stock' : 'Limited'}
                   </Badge>
                   <span className="demo-price">${p.price}</span>
                 </div>
@@ -134,29 +131,17 @@ function App() {
           }
         >
           <p className="demo-muted">
-            Rapid clicks coalesce; use <strong>Flush</strong> to apply
-            immediately, or <strong>Cancel</strong> to drop the pending call.
+            Rapid clicks coalesce; use <strong>Flush</strong> to apply immediately, or{' '}
+            <strong>Cancel</strong> to drop the pending call.
           </p>
           <div className="demo-row wrap">
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={() => bumpTaps()}
-            >
+            <Button type="button" variant="secondary" onClick={() => bumpTaps()}>
               Debounced tap
             </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => bumpTaps.flush()}
-            >
+            <Button type="button" variant="ghost" onClick={() => bumpTaps.flush()}>
               Flush
             </Button>
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={() => bumpTaps.cancel()}
-            >
+            <Button type="button" variant="ghost" onClick={() => bumpTaps.cancel()}>
               Cancel
             </Button>
           </div>
@@ -175,9 +160,7 @@ function App() {
               </div>
             }
           >
-            <p className="demo-muted">
-              Joined {new Date(u.createdAt).toLocaleDateString()}
-            </p>
+            <p className="demo-muted">Joined {new Date(u.createdAt).toLocaleDateString()}</p>
           </Card>
         ))}
       </section>
